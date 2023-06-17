@@ -18,7 +18,7 @@ int main(int argc, char const *argv[]) {
    */
 
   int arr[] = {10, 23, 27, 40, 50, 67, 70, 80, 90, 100};
-  int target = 100; //! arbitrary value
+  int target = 23; //! arbitrary value
   output(arr, SIZE(arr));
   std::cout << binarySearch(arr, SIZE(arr), target);
   return 0;
@@ -50,7 +50,7 @@ int binarySearch(int *arr, int count, int target) {
     if (arr[middle] < target)
       left = middle + 1;
 
-  } while (middle);
+  } while (middle && left <= right);
   std::cout << "NOT FOUND \n";
   return -1;
 }
