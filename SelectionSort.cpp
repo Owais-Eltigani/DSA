@@ -1,5 +1,6 @@
 #include <iostream>
 #define SIZE(arr) sizeof(arr) / sizeof(arr[0])
+
 void swap(int &num1, int &num2) {
   int temp = num1;
   num1 = num2;
@@ -22,6 +23,7 @@ void print(int *arr, int count) {
     std::cout << arr[i] << "  ";
   std::cout << "\n";
 }
+
 int main(int argc, char const *argv[]) {
   int arr[] = {8, 12, 0, 4, 9, 2};
   print(arr, 6);

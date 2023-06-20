@@ -8,11 +8,13 @@ void display(int *arr, int count) {
 
 void insertionSort(int *arr, int count) {
   for (size_t i = 1; i < count; i++) {
-    int temp = arr[i];
+    int curr = arr[i];
     int j = i - 1;
-    while (j >= 0 && temp < arr[j])
-      arr[j-- + 1] = arr[j];
-    arr[j + 1] = temp;
+    while (j >= 0 && curr < arr[j]) {
+      arr[j + 1] = arr[j];
+      j--;
+    }
+    arr[j + 1] = curr;
   }
 }
 
