@@ -34,10 +34,10 @@ void output(int *arr, int SIZE) {
   std::cout << "\n";
 }
 
-void swap(int *a, int *b) {
-  int temp = *a;
-  *a = *b;
-  *b = temp;
+void swap(int &a, int &b) {
+  int temp = a;
+  a = b;
+  b = temp;
 }
 
 void quickSort(int *arr, int start, int end) {
@@ -53,7 +53,7 @@ int partition(int *arr, int start, int end) {
   int index = start;
   for (int i = start; i < end; i++)
     if (arr[i] < pivot)
-      swap(&arr[i], &arr[index++]);
-  swap(&arr[index], &pivot);
+      swap(arr[i], arr[index++]);
+  swap(arr[index], arr[end]);
   return index;
 }
