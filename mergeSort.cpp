@@ -88,6 +88,7 @@ void merge(int *arr, int left, int middle, int right) {
 }
 
 void myMerge(int *arr, int left, int middle, int right) {
+
   int i = left, j = middle + 1, k = 0;
 
   // Number of elements in left and right arrays.
@@ -117,5 +118,5 @@ void myMerge(int *arr, int left, int middle, int right) {
     temp[k++] = arr[j++];
 
   for (size_t i = left; i < right; i++)
-    arr[i] = temp[i];
+    arr[i] = temp[i - left];
 }
