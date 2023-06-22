@@ -53,25 +53,6 @@ void bubbleSort(int *arr) {
   }
 }
 
-/*
-
-void bubbleSort2(int *arr) {
-  bool swapped = false;
-  do {
-    for (size_t j = 0; (j < SIZE - i - 1); j++) {
-      if (arr[j] > arr[j + 1]) {
-        swap(arr[j], arr[j + 1]);
-        swapped = true;
-        swapCounter++;
-      }
-      innerLoopCounter++;
-    }
-    outerLoopCounter++;
-  } while (SIZE && swapped);
-}
-
-
- */
 void swap(int &num1, int &num2) {
   int temp = num1;
   num1 = num2;
