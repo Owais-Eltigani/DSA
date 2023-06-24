@@ -17,7 +17,7 @@ int main(int argc, char const *argv[]) {
 
    */
 
-  int arr[] = {4, 2, 5, 1, 3};
+  int arr[] = {4, 2, 5, 1, 3, 2};
   quickSort(arr, 0, SIZE(arr) - 1); //! Big O(nlogn)
   output(arr, SIZE(arr));
   return 0;
@@ -52,7 +52,7 @@ int partition(int *arr, int start, int end) {
   int pivot = arr[end];
   int index = start;
   for (int i = start; i < end; i++)
-    if (arr[i] < pivot)
+    if (arr[i] <= pivot)
       swap(arr[i], arr[index++]);
   swap(arr[index], arr[end]);
   return index;

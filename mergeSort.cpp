@@ -47,7 +47,7 @@ void mergeSort(int *arr, int left, int right) {
     int middle = (left + right) / 2;
     mergeSort(arr, left, middle);
     mergeSort(arr, middle + 1, right);
-    merge(arr, left, middle, right);
+    myMerge(arr, left, middle, right);
   }
 }
 
@@ -89,34 +89,23 @@ void merge(int *arr, int left, int middle, int right) {
 
 void myMerge(int *arr, int left, int middle, int right) {
 
-  int i = left, j = middle + 1, k = 0;
+  int left_C = left, right_C = middle + 1, counter = 0;
 
-  // Number of elements in left and right arrays.
-  int n1 = middle - left + 1;
-  int n2 = right - middle;
+  int *temp = new int[(middle - left + 1) + (right - middle)];
 
-  // Create left and right arrays.
-  int *temp = new int[n2 + n1];
-
-  while (i < n1 && j < n2) {
-    if (arr[i] <= arr[j])
-      temp[k++] = arr[i++];
+  while (left_C <= middle && right_C <= right) {
+    if (arr[left_C] < arr[right_C])
+      temp[counter++] = arr[left_C++];
     else
-      temp[k++] = arr[j++];
+      temp[counter++] = arr[right_C++];
   }
 
-  i = 0, j = 0, k = left;
+  while (left_C <= middle)
+    temp[counter++] = arr[left_C++];
 
-  // Merge left and right arrays.
+  while (right_C <= right)
+    temp[counter++] = arr[right_C++];
 
-  // Copy remaining elements from left array.
-  while (i < n1)
-    temp[k++] = arr[i++];
-
-  // Copy remaining elements from right array.
-  while (j < n2)
-    temp[k++] = arr[j++];
-
-  for (size_t i = left; i < right; i++)
+  for (size_t i = left; i <= right; i++)
     arr[i] = temp[i - left];
 }
