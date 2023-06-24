@@ -18,7 +18,8 @@ int main(int argc, char const *argv[]) {
 
   int *arr = new int[6]{4, 2, 5, 1, 3, 2};
   //   countingSort(arr, 6, 12);
-  arr = countingSort2(arr, 6, 12);
+  arr = countingSort2(arr, 6, 12); //? Big O(n) || the range should be always
+                                   //? greater than the largest element.
   print(arr, 6);
   return 0;
 }
@@ -51,10 +52,13 @@ int *countingSort2(int *arr, int size, int range) {
 
   for (int i = 0; i < range; i++)
     count[i] = 0;
+
   for (int i = 0; i < size; i++)
     ++count[arr[i]];
+
   for (int i = 1; i < range; i++)
     count[i] = count[i] + count[i - 1];
+
   for (int i = 0; i < size; i++)
     output[--count[arr[i]]] = arr[i];
 
@@ -70,10 +74,13 @@ void print(int *arr, int SIZE) {
 int input(int *arr, int SIZE) {
   int largest = INT16_MIN;
   std::cout << "enter " << SIZE << " elements";
+
   for (size_t i = 0; i < SIZE; i++) {
+
     std::cin >> arr[i];
     if (arr[i] > largest)
       largest = arr[i];
   }
+
   return largest;
 }
