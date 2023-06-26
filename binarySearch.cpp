@@ -38,7 +38,7 @@ void output(int *arr, int SIZE) {
 int binarySearch(int *arr, int count, int target) {
   int left, middle, right;
   left = 0, right = count - 1;
-  do {
+  while (left <= right) {
     middle = (left + right) / 2;
 
     if (arr[middle] == target)
@@ -49,8 +49,7 @@ int binarySearch(int *arr, int count, int target) {
 
     if (arr[middle] < target)
       left = middle + 1;
-
-  } while (middle && left <= right);
+  }
   std::cout << "NOT FOUND \n";
   return -1;
 }
