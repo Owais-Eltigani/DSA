@@ -1,9 +1,7 @@
 
+#include <algorithm>
 #include <iostream>
-#include <queue>
 #include <vector>
-// #include <bits/c++io.h>
-using namespace std;
 
 int input(int *, int);
 int digitCount(int);
@@ -13,8 +11,7 @@ void bucketSort(int *, int, int);
 
 int main(int argc, char const *argv[]) {
 
-  //   int *arr = new int[6]{4, 2, 5, 1, 3, 2};
-  int *arr = new int[3];
+  int *arr = new int[6]{4, 2, 5, 1, 3, 2};
   int largest = input(arr, 3);
   bucketSort(arr, 3, largest);
   print(arr, 3);
@@ -59,14 +56,14 @@ void bucketSort(int *arr, int size, int largest) {
 
   int radix = 1;
 
-  vector<int> indices;
+  std::vector<int> indices;
 
   for (size_t i = 0; i < digit; i++) {
 
     radix = power(i + 1);
 
     // vector<vector<int>> queue(10, vector<int>(10, 0)); // 2D vector
-    vector<vector<int>> queue(10); // 2D vector with variable sizes
+    std::vector<std::vector<int>> queue(10); // 2D vector with variable sizes
 
     for (size_t j = 0; j < size; j++) {
 
@@ -75,6 +72,8 @@ void bucketSort(int *arr, int size, int largest) {
       indices.push_back(index);
       queue[index].push_back(arr[j]);
     }
+
+    sort(indices.begin(), indices.end());
 
     for (size_t i = 0; i < size; i++) {
       arr[i] = queue[indices.front()].front();
