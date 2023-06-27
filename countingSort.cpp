@@ -29,9 +29,6 @@ void countingSort(int *arr, int SIZE, int RANGE) {
   int *count = new int[RANGE];
   int *output = new int[SIZE];
 
-  for (size_t i = 0; i < RANGE; i++)
-    count[i] = 0;
-
   for (size_t i = 0; i < SIZE; i++)
     count[arr[i]]++;
 
@@ -47,11 +44,8 @@ void countingSort(int *arr, int SIZE, int RANGE) {
 
 int *countingSort2(int *arr, int size, int range) {
 
-  int *count = new int[range];
+  int *count = new int[range]{0};
   int *output = new int[size];
-
-  for (int i = 0; i < range; i++)
-    count[i] = 0;
 
   for (int i = 0; i < size; i++)
     ++count[arr[i]];
