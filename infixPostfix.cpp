@@ -37,7 +37,7 @@ std::string infexPostfix(std::string expr, std::stack<char> stack) {
     // true when it's ')'
     else if (precedence(expr[i]) == -1 && expr[i] == ')') {
 
-      // extarcting all operator from stack till founding '('
+      // extarcting all operators from stack till findding '('
       while (stack.top() != '(') {
         postfix += pop(stack);
       }
@@ -79,7 +79,7 @@ std::string infexPostfix(std::string expr, std::stack<char> stack) {
   while (!stack.empty())
     postfix += pop(stack);
 
-  return postfix; //! CAN BE EMPTY 😷
+  return postfix; //! CAN BE EMPTY 😷 !!!
 }
 
 int precedence(char ch) {
