@@ -1,7 +1,7 @@
 #include <iostream>
 #include <stack>
 
-std::string infexPostfix(std::string, std::stack<char>);
+std::string infixPostfix(std::string, std::stack<char>);
 int precedence(char);
 char pop(std::stack<char> &);
 
@@ -13,13 +13,13 @@ int main(int argc, char const *argv[]) {
   std::cout << "Enter a mathematical expression: \n";
   std::cin >> math_expr;
 
-  postfix = infexPostfix(math_expr, stack);
+  postfix = infixPostfix(math_expr, stack);
   std::cout << "\n" << postfix << "\n";
 
   return 0;
 }
 
-std::string infexPostfix(std::string expr, std::stack<char> stack) {
+std::string infixPostfix(std::string expr, std::stack<char> stack) {
 
   // initializing the output array
   std::string postfix = "";
