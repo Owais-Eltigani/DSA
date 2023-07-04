@@ -101,7 +101,7 @@ void Queue ::print() {
   cout << endl << "dqC = " << dqC << " count = " << count << endl;
 }
 
-// TODO fixing this visualisation FUNCTION
+// TODO fixing this visualisation FUNCTION 🥹
 
 /* void Queue ::print(char c) {
   static int stat = 0;
@@ -119,7 +119,7 @@ void Queue ::print() {
   cout << endl << "dqC = " << dqC << " count = " << count << endl;
 } */
 
-// TODO _________________________________________
+// TODO _________________________________________ 😭
 
 int Queue ::dequeue() {
   int temp = -1;
