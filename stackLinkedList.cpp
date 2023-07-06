@@ -34,10 +34,12 @@ int main(int argc, char const *argv[]) {
   std::cout << stack.size() << "\n";
   stack.push(&n1);
 
-  std::cout << stack.size() << "\n";
+  // std::cout << stack.size() << "\n";
   std::cout << stack.pop() << "\n";
-  std::cout << stack.size() << "\n";
+  std::cout << stack.pop() << "\n";
+  // std::cout << stack.size() << "\n";
 
+  // delete n1;
   return 0;
 }
 
@@ -45,7 +47,11 @@ Stack::Stack(Node *node) { top = node; }
 
 Stack::Stack() { top = NULL; }
 
-bool Stack::isEmpty() { return top == NULL; }
+bool Stack::isEmpty() {
+
+  // return !!top;
+  return top == NULL;
+}
 
 void Stack::push(Node *node) {
 
