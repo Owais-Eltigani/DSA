@@ -24,7 +24,7 @@ public:
   void deleteNode(int);
   void updateNode(int, int);
   void reverse();
-  void swap(Node *, Node *);
+  Node *reverse(Node *);
   void print(int);
   void print();
 };
@@ -215,6 +215,19 @@ void LinkedList::reverse() {
   }
   head->next = tail;
 }
+
+Node *LinkedList::reverse(Node *head) {
+
+  if (head == NULL || head->next == NULL)
+    return head;
+
+  Node *ptr = reverse(head->next);
+  ptr->next->next = head;
+  ptr->next = NULL;
+
+  return ptr;
+}
+
 // void LinkedList::reverse() {
 //   Node *ptr = head->next;
 //   Node *tail = NULL;
