@@ -210,11 +210,23 @@ void LinkedList::reverse() {
   while (ptr) {
     Node *temp = ptr;
     ptr = ptr->next;
-    Node *node = tail;
+    temp->next = tail;
     tail = temp;
-    tail->next = node;
-    cout << "   tail is (" << tail->key << " , " << tail->data << ") " << endl;
   }
   head->next = tail;
-  cout << "   Head is (" << tail->key << " , " << tail->data << ") " << endl;
 }
+// void LinkedList::reverse() {
+//   Node *ptr = head->next;
+//   Node *tail = NULL;
+//   while (ptr) {
+//     Node *temp = ptr;
+//     ptr = ptr->next;
+//     Node *node = tail;
+//     tail = temp;
+//     tail->next = node;
+//     cout << "   tail is (" << tail->key << " , " << tail->data << ") " <<
+//     endl;
+//   }
+//   head->next = tail;
+//   cout << "   Head is (" << tail->key << " , " << tail->data << ") " << endl;
+// }
