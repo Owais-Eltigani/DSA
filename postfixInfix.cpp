@@ -13,6 +13,8 @@ int main(int argc, char const *argv[]) {
   std::cout << "Enter a mathematical expression: \n";
   std::cin >> postfix;
 
+  // std::cin.get(postfix, " ");
+
   math_expr = postfixInfix(postfix, stack);
   std::cout << "\n" << math_expr << "\n";
 

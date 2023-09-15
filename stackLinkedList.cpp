@@ -20,6 +20,7 @@ public:
   void push(Node *);
   int pop();
   int peak(int);
+  void print();
   int size();
 };
 
@@ -123,4 +124,9 @@ int Stack::size() {
   }
 
   return count;
+}
+
+void Stack::print() {
+
+  // TODO 😷
 }

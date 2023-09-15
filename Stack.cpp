@@ -1,14 +1,16 @@
 #include <iostream>
 #define CAPACITY 5
-using namespace std;
 
-class stack {
+class Stack {
 private:
   int top;
+
+  // uses a fixed size array
   int data[CAPACITY];
 
 public:
-  stack();
+  Stack();
+  ~Stack(); //? for dynamic memory allocation and deallocation
   bool isEmpty();
   bool isFull();
   void push(int);
@@ -18,78 +20,111 @@ public:
 };
 
 int main() {
-  stack s;
+
+  Stack stack;
   int ch, num;
+
   do {
-    cout << "\n 1 - push element  \n"
-         << " 2 - pop element \n"
-         << " 3 - isEmpty\n"
-         << " 4 - isFull \n"
-         << " 5 - print stack \n"
-         << " 6 - size\n"
-         << " 7 - clear screen" << endl;
-    cout << "\n enter your choice: ";
-    cin >> ch;
+    std::cout << "\n 1 - push element  \n"
+              << " 2 - pop element \n"
+              << " 3 - isEmpty\n"
+              << " 4 - isFull \n"
+              << " 5 - print Stack \n"
+              << " 6 - size\n"
+              << " 7 - clear screen" << std::endl;
+    std::cout << "\n enter your choice: ";
+
+    std::cin >> ch;
+
     switch (ch) {
+
     case 1:
-      cout << " enter number: ";
-      cin >> num;
-      s.push(num);
+      std::cout << " enter number: ";
+      std::cin >> num;
+      stack.push(num);
       break;
     case 2:
-      cout << endl << (s.pop()) << " pooped 💩" << endl;
+      std::cout << std::endl << (stack.pop()) << " pooped 💩" << std::endl;
       break;
     case 3:
-      cout << endl << s.isEmpty();
+      std::cout << std::endl << stack.isEmpty();
       break;
     case 4:
-      cout << endl << s.isFull();
+      std::cout << std::endl << stack.isFull();
       break;
     case 5:
-      s.print();
+      stack.print();
       break;
     case 6:
-      cout << endl << s.size();
+      std::cout << std::endl << stack.size();
       break;
     case 7:
-      cout << system("cls");
+      std::cout << system("cls");
       break;
     default:
       break;
     }
-  } while (ch != 0);
-  cout << endl;
+  } while (ch); // while ch !== 0
+
+  std::cout << std::endl;
   return 0;
 }
-stack::stack() {
+
+Stack::Stack() {
+
+  // init the Stack
   top = -1;
-  for (int i = 0; i < 10; i++)
-    data[i] = 0;
+
+  data[0] = 0; //? do the same thing as the for loop below
+
+  // for (int i = 0; i < CAPACITY; i++)
+  //   data[i] = 0;
 }
-bool stack::isEmpty() { return (top == -1); }
-bool stack ::isFull() { return (top == CAPACITY - 1); }
-void stack ::push(int num) {
+
+bool Stack::isEmpty() {
+  return (top == -1);
+} // return true or false without using if statement
+
+bool Stack ::isFull() {
+  return (top == CAPACITY - 1);
+} // return true or false without using if statement
+
+void Stack ::push(int num) {
   if (isFull())
-    cout << " stack overflow " << endl;
+    std::cout << " Stack overflow " << std::endl;
+
   else
+    // use prefix increment to increment top first and use the new value of top
+    // to assign the value of num to the array
     data[++top] = num;
+
   print();
 }
-void stack ::print() {
-  cout << endl << endl;
+
+void Stack ::print() {
+
+  std::cout << std::endl << std::endl;
+
+  //! alert: needs some work
+
   for (int i = top; i >= 0; i--) {
-    cout << " \t\t\t\t |    "
-         << "     |\n";
+    std::cout << " \t\t\t\t |    "
+              << "     |\n";
+
+    //  the number is 2 digit number
     if (data[i] > 9)
-      cout << " \t\t\t\t |____" << data[i] << "___|\n ";
+      std::cout << " \t\t\t\t |____" << data[i] << "___|\n ";
+
+    //  the number is 1 digit number
     else
-      cout << " \t\t\t\t |____" << data[i] << "____|\n ";
+      std::cout << " \t\t\t\t |____" << data[i] << "____|\n ";
   }
 }
-int stack ::pop() {
+
+int Stack ::pop() {
   if (isEmpty()) {
-    cout << "stack underflow"
-         << "\n";
+    std::cout << "Stack underflow"
+              << "\n";
     return -1;
   } else {
     int temp = data[top--];
@@ -97,4 +132,5 @@ int stack ::pop() {
     return temp;
   }
 }
-int stack ::size() { return top + 1; }
+
+int Stack ::size() { return top + 1; }
