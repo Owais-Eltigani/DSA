@@ -26,7 +26,7 @@ std::string infixPostfix(std::string expr, std::stack<char> stack) {
 
   for (size_t i = 0; i < expr.length(); i++) {
 
-    // true when there is operand {a,b,...}
+    // true when the current chaar expr[i] is operand {a,b,...}
     if (precedence(expr[i]) == -1 && expr[i] != ')')
       postfix += expr[i];
 
@@ -37,19 +37,19 @@ std::string infixPostfix(std::string expr, std::stack<char> stack) {
     // true when it's ')'
     else if (precedence(expr[i]) == -1 && expr[i] == ')') {
 
-      // extarcting all operators from stack till findding '('
+      // popping all operators from stack till findding '('
       while (stack.top() != '(') {
         postfix += pop(stack);
       }
 
       // deleting the '(' from the stack
       if (stack.top() == '(')
-        stack.pop(); //? stack.pop() is used instead od my own pop() coz '('
-                     //? shouldn't be add.
+        stack.pop(); //? stack.pop() is used instead od my own pop() function,
+                     // coz '(' ? shouldn't be add.
     }
 
     else {
-      // only true at first
+      // only true at the first iteration
       if (stack.empty())
         stack.push(expr[i]);
 
@@ -61,10 +61,11 @@ std::string infixPostfix(std::string expr, std::stack<char> stack) {
       else if (precedence(expr[i]) == precedence(stack.top()) && expr[i] == '^')
         stack.push(expr[i]);
 
-      // true when there are successive +,- or *,/. same precedence.
+      // true when there are successive +,- or *,/. operator with same
+      // precedence.
       else {
 
-        // poping all elements that R > or === in precedence
+        // popping all elements that R > or === in precedence
         while (precedence(expr[i]) <= precedence(stack.top())) {
           postfix += pop(stack);
         }
@@ -95,10 +96,11 @@ int precedence(char ch) {
   return -1; //? return -1 for both ')' and any other operand.
 }
 
-// called by reference to alter the top value
+// called by reference to alter the top value and return the popped value.
 char pop(std::stack<char> &stack) {
 
   char ch = stack.top();
-  stack.pop();
+  stack.pop(); //? rhe built-in pop() function doesn't return anything.
+
   return ch;
 }
