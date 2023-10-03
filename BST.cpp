@@ -1,7 +1,7 @@
 #include <iostream>
 
 class Node {
-private:
+
 public:
   int data;
   Node *right, *left;
@@ -11,16 +11,20 @@ public:
 };
 
 Node::Node(int data, Node *left, Node *right) {
+
   this->data = data;
   this->left = left;
   this->right = right;
 }
+
+// default constructor to initialize the root node
 Node::Node() {
+
   this->data = 0;
   this->left = this->right = NULL;
 }
 
-Node::~Node() {}
+Node::~Node() {} //? empty destructor
 
 class BST {
 
@@ -28,34 +32,39 @@ public:
   Node *root;
   BST(Node *);
   ~BST();
+  int height(Node *);
+  int BF(Node *);
   bool isEmpty();
   void insertNode(Node *);
-  Node *insertB(Node *, Node *);
   void print2D(Node *, int);
   void NLR(Node *);
   void LNR(Node *);
   void LRN(Node *);
   void BFS(Node *);
   void levels(Node *, int);
+  Node *insertB(Node *, Node *);
   Node *search(int);
   Node *min(Node *);
   Node *deleteNode(Node *, int);
   Node *deleteB(Node *, int);
   Node *lRotation(Node *);
   Node *rRotation(Node *);
-  int height(Node *);
-  int BF(Node *);
 };
+
 BST::BST(Node *node = NULL) { this->root = node; }
 BST::~BST() { this->root = NULL; }
 
 int main(int argc, char const *argv[]) {
+
   int opt, height, val;
   Node *node;
   BST Tree;
+
   do {
+
     node = new Node;
-    std::cout << "1- insertNode node\n"
+
+    std::cout << " 1- insertNode node\n"
               << " 2- NLR\n"
               << " 3- LNR\n"
               << " 4- LRN\n"
@@ -67,7 +76,9 @@ int main(int argc, char const *argv[]) {
               << " 10- Clear Screen\n"
               << " 11- Balance insert\n"
               << "enter operation:  ";
+
     std::cin >> opt;
+
     switch (opt) {
     case 1:
       std::cout << "enter data: ";
@@ -128,6 +139,7 @@ int main(int argc, char const *argv[]) {
 }
 
 bool BST::isEmpty() { return (!root); }
+
 void BST::insertNode(Node *node) {
   if (root) {
     Node *temp = root;
@@ -152,38 +164,60 @@ void BST::insertNode(Node *node) {
     std::cout << "root appointed\n";
   }
 }
+
+// graphical representation of the tree
 void BST::print2D(Node *node, int space) {
+
   if (node == NULL)
     return;
+
   space += space;
   print2D(node->right, space);
   std::cout << "\n";
+
   for (size_t i = 10; i < space; i++)
     std::cout << " ";
+
   std::cout << node->data << "\n";
   print2D(node->left, space);
 }
+
+//* ---------- Depth-First-Search Traversals approaches ----------
+
+// preorder traversal
 void BST::NLR(Node *node) {
-  if (!node)
+
+  if (!node) //! there is no node
     return;
-  std::cout << node->data << "  ";
-  NLR(node->left);
-  NLR(node->right);
+
+  std::cout << node->data << "  "; // print the root node
+  NLR(node->left);                 // go to the left node
+  NLR(node->right);                // go to the right node
 }
+
+// inorder traversal
 void BST::LNR(Node *node) {
-  if (!node)
+
+  if (!node) //! there is no node
     return;
-  LNR(node->left);
-  std::cout << node->data << "  ";
-  LNR(node->right);
+
+  LNR(node->left);                 // go to the left node
+  std::cout << node->data << "  "; // print the root node
+  LNR(node->right);                // go to the right node
 }
+
+// postorder traversal
 void BST::LRN(Node *node) {
-  if (!node)
+
+  if (!node) //! there is no node
     return;
-  LRN(node->left);
-  LRN(node->right);
-  std::cout << node->data << "  ";
+
+  LRN(node->left);                 // go to the left node
+  LRN(node->right);                // go to the right node
+  std::cout << node->data << "  "; // print the root node
 }
+
+//* -----------------------------------------------------------
 
 Node *BST::search(int data) {
   if (!root)
