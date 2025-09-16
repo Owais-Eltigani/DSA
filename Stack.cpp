@@ -1,15 +1,18 @@
 #include <iostream>
-#define CAPACITY 5
 
 class Stack {
+
 private:
   int top;
+  int CAPACITY;
 
-  // uses a fixed size array
-  int data[CAPACITY];
+  // define the stack data as pointer
+  int *data;
 
 public:
   Stack();
+  Stack(int);
+
   ~Stack(); //? for dynamic memory allocation and deallocation
   bool isEmpty();
   bool isFull();
@@ -21,8 +24,11 @@ public:
 
 int main() {
 
-  Stack stack;
-  int ch, num;
+  int ch, num, stackSize;
+
+  std::cout << "enter the size of the stack: ";
+  std::cin >> stackSize;
+  Stack stack(stackSize);
 
   do {
     std::cout << "\n 1 - push element  \n"
@@ -59,7 +65,12 @@ int main() {
       std::cout << std::endl << stack.size();
       break;
     case 7:
-      std::cout << system("cls");
+      std::cout << system("clear"); // for linux
+      std::cout << system("cls");   // for windows
+      break;
+
+    case 0:
+      std::cout << "destroying stack and exiting..." << std::endl;
       break;
     default:
       break;
@@ -70,15 +81,41 @@ int main() {
   return 0;
 }
 
+// default constructor
 Stack::Stack() {
+
+  // init the Stack top
+  top = -1;
+  CAPACITY = 5;
+
+  data = new int[CAPACITY];
+
+  //? init the stack data with 0
+  for (int i = 0; i < CAPACITY; i++)
+    data[i] = 0;
+}
+
+// premeterizer constructor
+Stack::Stack(int size) {
 
   // init the Stack
   top = -1;
+  CAPACITY = size;
 
-  data[0] = 0; //? do the same thing as the for loop below
+  //? create a dynamic array
+  data = new int[CAPACITY];
 
-  // for (int i = 0; i < CAPACITY; i++)
-  //   data[i] = 0;
+  //? init the stack data with 0
+  for (int i = 0; i < CAPACITY; i++)
+    data[i] = 0;
+}
+
+Stack::~Stack() {
+  // de-allocating the memory
+
+  std::cout << "Destructor called" << std::endl;
+  delete[] data;
+  data = nullptr;
 }
 
 bool Stack::isEmpty() {
