@@ -15,7 +15,7 @@ public:
 
   //
   Node();
-  Node(int value, std::string key);
+  Node(std::string, int);
   ~Node();
 };
 
@@ -27,7 +27,7 @@ Node::Node() {
 }
 
 Node::~Node() {}
-Node::Node(int value, std::string key) {
+Node::Node(std::string key, int value) {
   this->key = key;
   this->value = value;
   this->next = nullptr;
@@ -37,7 +37,7 @@ Node::Node(int value, std::string key) {
 
 class hashmap {
 private:
-  Node *map;
+  Node *map; //! need to converted into **map instead to work.
   int size;
   int capacity;
   int hash(std::string key);
@@ -53,12 +53,14 @@ public:
   void updatePair(std::string key, int newValue);
   void deletePair(std::string key);
   int getValue(std::string key);
+  int getSize();
+  int loadFactor();
 
   // TODO implement a print2D()
   //  void print2D();
 };
 
-hashmap::hashmap(/* args */) {
+hashmap::hashmap() {
   this->capacity = 10;
   this->size = 0;
   map = new Node[capacity];
@@ -92,12 +94,13 @@ void hashmap::insertPair(Node *node) {
   if (address < 0 || address > capacity)
     return;
 
-  Node *temp = map[address].next;
-  node->next = temp;
-  temp = node;
+  node->next = map[address].next;
+  map[address].next = node;
 
   std::cout << "(" << node->key << ", " << node->value
             << ") has been inserted \n";
+
+  ++this->size;
 }
 
 void hashmap::lookUp(std::string key) {
@@ -112,12 +115,15 @@ void hashmap::lookUp(std::string key) {
 
   while (temp) {
 
+    std::cout << "(" << temp->key << ", " << temp->value << ")\n";
     if (temp->key == key) {
       std::cout << "(" << temp->key << ", " << temp->value << ")\n";
       return;
     }
     temp = temp->next;
   }
+
+  std::cout << "not found\n";
 }
 
 void hashmap::updatePair(std::string key, int newValue) {
@@ -178,8 +184,9 @@ void hashmap::deletePair(std::string key) {
 
     if (temp->key == key) {
 
-      prev->next = temp->next;
+      prev = temp->next;
       std::cout << "pair has been detached \n";
+      --this->size;
       return;
     }
     prev = temp;
@@ -190,10 +197,25 @@ void hashmap::deletePair(std::string key) {
   return;
 }
 
+int hashmap::getSize() { return this->size; }
+int hashmap ::loadFactor() { return this->size / this->capacity; }
+
 //! deallocate the memory of the bucket/map.
 hashmap::~hashmap() { delete[] this->map; }
 
 int main() {
   std::cout << "Hello, World!" << std::endl;
+
+  Node *node1 = new Node("12", 5);
+  Node *node2 = new Node("15", 23);
+  hashmap hashset;
+  hashset.insertPair(node1);
+
+  std::cout << "size of hashmap is: " << hashset.getSize() << "\n";
+  hashset.insertPair(node2);
+  std::cout << "size of hashmap is: " << hashset.getSize() << "\n";
+
+  hashset.lookUp("12");
+  //
   return 0;
 }
