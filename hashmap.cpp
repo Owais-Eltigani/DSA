@@ -94,6 +94,16 @@ hashmap::hashmap(int size) {
 //? calculating the hash value by the sum of ascii values.
 int hashmap::hash(std::string key) {
 
+  /*
+
+  - this hash function has very poor reliability becoz it may lead to
+  poor distribution of nodes in buckets and Anagrams like abc, cba
+  will collide togather most often and reduce the efficiency of other
+  operation.
+
+  - consider other hash function techniques like Polynomial Rolling
+  has function.
+  */
   int sum = 0;
   for (size_t i = 0; i < key.length(); i++) {
     char letter = key[i];
@@ -277,12 +287,19 @@ hashmap::~hashmap() {
 }
 
 int main() {
-  std::cout << "Hello, World!" << std::endl;
+
+#ifdef _WIN32
+  system("cls");
+#else
+  system("clear");
+#endif
 
   //? for every "new" there must be a "delete"
   Node *node2 = new Node("mat", 23);
   Node *node1 = new Node("alex", 5);
   Node *node3 = new Node("ron", 0);
+
+  //* an anagram of axel and they will collide.
   Node *node4 = new Node("axel", 31);
 
   //
@@ -295,8 +312,14 @@ int main() {
   hashset.updatePair("mat", 100);
   hashset.insertPair(node4);
 
-  hashset.lookUp("ron");
-  hashset.lookUp("axel");
+  hashset.lookUp("ron"); //? not inserted to the hash
+  hashset.lookUp("alex");
+
+  hashset.deletePair("axel");
+  hashset.lookUp("alex");
+
+  std::cout << "value of key" << "mat --> " << hashset.getValue("mat")
+            << " \n;";
 
   // delete node1, node2, node3, node4; //! keep this commented.
   return 0;
