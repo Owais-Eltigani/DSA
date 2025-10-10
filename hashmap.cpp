@@ -1,5 +1,5 @@
 /*
-A simple implementation of a hashmap in C++, using a bucket of pointers to
+A simple implementation of a Hashmap in C++, using a bucket of pointers to
 nodes. This implementation uses separate chaining for collision resolution and
 traversal.
 */
@@ -21,6 +21,76 @@ public:
   ~Node();
 };
 
+class Hashmap {
+private:
+  //? a pointer-to-pointer array to create the 2D array for buckets.
+  Node **map;
+  int size;
+  int capacity;
+  int hash(std::string);
+
+public:
+  Hashmap();
+  Hashmap(int);
+  ~Hashmap();
+
+  //* method prototypes "declaration"
+  void insertPair(Node *);
+  void lookUp(std::string);
+  void updatePair(std::string, int);
+  void deletePair(std::string);
+  int getValue(std::string);
+  int getSize();
+  double loadFactor();
+
+  // TODO implement a print2D()
+  //   void print2D();
+};
+
+int main() {
+
+#ifdef _WIN32
+  system("cls");
+#else
+  system("clear");
+#endif
+
+  //? for every "new" there must be a "delete"
+  Node *node2 = new Node("mat", 23);
+  Node *node1 = new Node("alex", 5);
+  Node *node3 = new Node("ron", 0);
+
+  //* an anagram of axel and they will collide.
+  Node *node4 = new Node("axel", 31);
+
+  //
+  Hashmap hashset;
+  hashset.insertPair(node1);
+
+  std::cout << "size of Hashmap is: " << hashset.getSize() << "\n";
+  hashset.insertPair(node2);
+  std::cout << "size of Hashmap is: " << hashset.getSize() << "\n";
+  hashset.updatePair("mat", 100);
+  hashset.insertPair(node4);
+
+  hashset.lookUp("ron"); //? not inserted to the hash
+  hashset.lookUp("alex");
+
+  hashset.deletePair("axel");
+  hashset.lookUp("alex");
+
+  std::cout << "value of key" << "mat --> " << hashset.getValue("mat")
+            << " \n;";
+
+  //? the ownership of node1,node2, node4 belongs to the Hashmap class
+  //? and they'll be freed at the destructor ~Hashmap()
+  // delete node1, node2, node4; //! keep this commented.
+
+  delete node3;
+  return 0;
+}
+
+//! method implementation //
 //? default constructor points next to nullptr.
 Node::Node() {
   this->key = "";
@@ -35,35 +105,10 @@ Node::Node(std::string key, int value) {
 }
 
 Node::~Node() { std::cout << "node has been destroyed\n"; }
+
 //
 
-class hashmap {
-private:
-  //? a pointer-to-pointer array to create the 2D array for buckets.
-  Node **map;
-  int size;
-  int capacity;
-  int hash(std::string key);
-
-public:
-  hashmap();
-  hashmap(int size);
-  ~hashmap();
-
-  //* method prototypes "declaration"
-  void insertPair(Node *node);
-  void lookUp(std::string key);
-  void updatePair(std::string key, int newValue);
-  void deletePair(std::string key);
-  int getValue(std::string key);
-  int getSize();
-  double loadFactor();
-
-  // TODO implement a print2D()
-  //  void print2D();
-};
-
-hashmap::hashmap() {
+Hashmap::Hashmap() {
   this->capacity = 10;
   this->size = 0;
 
@@ -77,7 +122,7 @@ hashmap::hashmap() {
   }
 }
 
-hashmap::hashmap(int size) {
+Hashmap::Hashmap(int size) {
   this->capacity = size;
   this->size = 0;
 
@@ -92,7 +137,7 @@ hashmap::hashmap(int size) {
 }
 
 //? calculating the hash value by the sum of ascii values.
-int hashmap::hash(std::string key) {
+int Hashmap::hash(std::string key) {
 
   /*
 
@@ -114,7 +159,7 @@ int hashmap::hash(std::string key) {
 }
 
 //? append the new node at the start of the bucket list big O(1).
-void hashmap::insertPair(Node *node) {
+void Hashmap::insertPair(Node *node) {
 
   // get the memory address and head of bucket;
   int address = hash(node->key);
@@ -134,7 +179,7 @@ void hashmap::insertPair(Node *node) {
             << ") has been inserted \n";
 }
 
-void hashmap::lookUp(std::string key) {
+void Hashmap::lookUp(std::string key) {
 
   int address = hash(key);
 
@@ -159,7 +204,7 @@ void hashmap::lookUp(std::string key) {
   std::cout << "not found\n";
 }
 
-void hashmap::updatePair(std::string key, int newValue) {
+void Hashmap::updatePair(std::string key, int newValue) {
 
   int address = hash(key);
 
@@ -185,7 +230,7 @@ void hashmap::updatePair(std::string key, int newValue) {
   std::cout << "node not found\n";
 }
 
-int hashmap::getValue(std::string key) {
+int Hashmap::getValue(std::string key) {
 
   int address = hash(key);
 
@@ -210,7 +255,7 @@ int hashmap::getValue(std::string key) {
   return INT16_MIN;
 }
 
-void hashmap::deletePair(std::string key) {
+void Hashmap::deletePair(std::string key) {
 
   int address = hash(key);
 
@@ -255,17 +300,17 @@ void hashmap::deletePair(std::string key) {
   return;
 }
 
-int hashmap::getSize() { return this->size; }
+int Hashmap::getSize() { return this->size; }
 
 //
-double hashmap ::loadFactor() {
+double Hashmap ::loadFactor() {
   return (double)this->size / (double)this->capacity;
 }
 
 //! deallocate the memory of the bucket/map.
-hashmap::~hashmap() {
+Hashmap::~Hashmap() {
 
-  // deallacote the memory of the hashmap bucket by bucket
+  // deallacote the memory of the Hashmap bucket by bucket
 
   for (size_t i = 0; i < capacity; i++) {
 
@@ -283,44 +328,7 @@ hashmap::~hashmap() {
 
   //! should always done last.
   delete[] map;
-  std::cout << " hashmap de-allocated from memory\n";
+  std::cout << " Hashmap de-allocated from memory\n";
 }
 
-int main() {
-
-#ifdef _WIN32
-  system("cls");
-#else
-  system("clear");
-#endif
-
-  //? for every "new" there must be a "delete"
-  Node *node2 = new Node("mat", 23);
-  Node *node1 = new Node("alex", 5);
-  Node *node3 = new Node("ron", 0);
-
-  //* an anagram of axel and they will collide.
-  Node *node4 = new Node("axel", 31);
-
-  //
-  hashmap hashset;
-  hashset.insertPair(node1);
-
-  std::cout << "size of hashmap is: " << hashset.getSize() << "\n";
-  hashset.insertPair(node2);
-  std::cout << "size of hashmap is: " << hashset.getSize() << "\n";
-  hashset.updatePair("mat", 100);
-  hashset.insertPair(node4);
-
-  hashset.lookUp("ron"); //? not inserted to the hash
-  hashset.lookUp("alex");
-
-  hashset.deletePair("axel");
-  hashset.lookUp("alex");
-
-  std::cout << "value of key" << "mat --> " << hashset.getValue("mat")
-            << " \n;";
-
-  // delete node1, node2, node3, node4; //! keep this commented.
-  return 0;
-}
+// TODO implement print2D() {}
